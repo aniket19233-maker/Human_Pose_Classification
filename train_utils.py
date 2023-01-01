@@ -1,4 +1,36 @@
 #SCORING
+from imblearn.over_sampling import SMOTE
+import sklearn
+import numpy as np
+import pandas as pd
+from sklearn import preprocessing
+from sklearn.utils import shuffle
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import *
+from numpy.linalg import norm
+from sklearn.metrics.pairwise import cosine_similarity
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import SGDClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+
+import mediapipe as mp
+import cv2
+import os
+from xgboost import XGBClassifier
+from tqdm import tqdm
+
+import pickle
+import copy
+import argparse
+from train_utils import *
+
+le = preprocessing.LabelEncoder()
+
 def get_cosine_similarity_results(x_train, x_test, y_train, y_test, features):
     #print(x_train[:10])
     #print(y_train[:10])
@@ -385,34 +417,34 @@ def get_custom_features(df):
     
     return pd.DataFrame(d)
 
-def get_designed_data_results(df):
+# def get_designed_data_results(df):
     
-    ## converting output to numeric values
-    le.fit(df["Pose"])
-    df["label"] = le.transform(df["Pose"])
+#     ## converting output to numeric values
+#     le.fit(df["Pose"])
+#     df["label"] = le.transform(df["Pose"])
     
-    ## dropping Pose column
-    df.drop(columns=["Pose","ImgNum"],inplace=True)
+#     ## dropping Pose column
+#     df.drop(columns=["Pose","ImgNum"],inplace=True)
     
    
-    ## feature designing for train and test
-    df = get_designed_data_df(df)
+#     ## feature designing for train and test
+#     df = get_designed_data_df(df)
     
-    x = df.iloc[:,:-1]
-    y = df.iloc[:,-1]
+#     x = df.iloc[:,:-1]
+#     y = df.iloc[:,-1]
     
-    x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
+#     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
     
     
     
-    model_dict = None
-    ## run models
-    model_dict = run_models(x_train, x_test, y_train, y_test,True)
+#     model_dict = None
+#     ## run models
+#     model_dict = run_model(x_train, x_test, y_train, y_test,True)
     
-    ## cosine similarity
-    #get_cosine_similarity_results(x_train, x_test, y_train, y_test, df.columns)
+#     ## cosine similarity
+#     #get_cosine_similarity_results(x_train, x_test, y_train, y_test, df.columns)
     
-    return model_dict
+#     return model_dict
 
 def predict_image(img_path, model, le, design_features=True):
     
