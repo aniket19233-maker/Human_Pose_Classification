@@ -26,7 +26,7 @@ from tqdm import tqdm
 import pickle
 import copy
 import argparse
-import train_utils
+from train_utils import *
 
 parser = argparse.ArgumentParser(description='manual to this script')
 
@@ -46,7 +46,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     ## train the model
     model = MODELS[args.model]
     model.fit(x_train,y_train)
-    y_pred = model_logistic.predict(x_test)
+    y_pred = model.predict(x_test)
     print(25*"##")
     print("LOGISTIC REGRESSION")
     print("Testing Data:")
@@ -223,13 +223,42 @@ def run_model(x_train, x_test, y_train, y_test, custom):
         
     return model_dict
 
+
+def get_designed_data_results(df):
+    
+    ## converting output to numeric values
+    le.fit(df["Pose"])
+    df["label"] = le.transform(df["Pose"])
+    
+    ## dropping Pose column
+    df.drop(columns=["Pose","ImgNum"],inplace=True)
+    
+   
+    ## feature designing for train and test
+    df = get_designed_data_df(df)
+    
+    x = df.iloc[:,:-1]
+    y = df.iloc[:,-1]
+    
+    x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
+    
+    
+    
+    model_dict = None
+    ## run models
+    model_dict = run_model(x_train, x_test, y_train, y_test,True)
+    
+    ## cosine similarity
+    #get_cosine_similarity_results(x_train, x_test, y_train, y_test, df.columns)
+    
+    return model_dict
+
 def main():
     
     #1. one-hot encode pose
-    le = preprocessing.LabelEncoder()
     
     df = pd.read_csv("trainSet_yoga82.csv")
-    model_dict = get_raw_data_results(df)
+    # model_dict = get_raw_data_results(df)
     d = get_designed_data_results(df)
 
 
