@@ -20,9 +20,9 @@ For training the model run the following command
 Follow the 'MODEL_NAME' abbreviations for running the above command
 
 LR = Logistic Regression Classifier<br />
-GNB = Gaussian Naive Bayes\n
-RF = Random Forest Classifier\n
-XGB = XGBoost Classifier\n
-ADA = Adaboost Classifier\n
-SGD = SGD Classifier\n
-SVM = Support Vector Machine Classifier\n
+GNB = Gaussian Naive Bayes<br />
+RF = Random Forest Classifier<br />
+XGB = XGBoost Classifier<br />
+ADA = Adaboost Classifier<br />
+SGD = SGD Classifier<br />
+SVM = Support Vector Machine Classifier
