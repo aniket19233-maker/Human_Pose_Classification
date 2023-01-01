@@ -19,7 +19,7 @@ For training the model run the following command
 ```
 Follow the 'MODEL_NAME' abbreviations for running the above command
 
-LR = Logistic Regression Classifier\n
+LR = Logistic Regression Classifier<br />
 GNB = Gaussian Naive Bayes\n
 RF = Random Forest Classifier\n
 XGB = XGBoost Classifier\n
