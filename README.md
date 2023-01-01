@@ -13,3 +13,7 @@ To install the dependencies pls run the following command
 ```
 !python3 -m pip install -r config.txt
 ```
+For training the model run the following command
+```
+!python3 train.py --model
+```
