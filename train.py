@@ -16,7 +16,7 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-
+from sklearn.model_selection import GridSearchCV
 import mediapipe as mp
 import cv2
 import os
@@ -37,6 +37,7 @@ args = parser.parse_args()
 
 # models
 MODELS = {'LR':LogisticRegression(), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC()}
+GRID_SRCH_PARAMS = {'LR':{'penalty': ['l1','l2'], 'C': [0.001,0.01,0.1,1]}}
 
 # function to train_models
 def run_model(x_train, x_test, y_train, y_test, custom):
@@ -60,7 +61,20 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     print("Accuracy:",accuracy_score(y_train,y_pred))
     print("F1 Score:",f1_score(y_train,y_pred, average="weighted"))
     ##print(classification_report(y_train,y_pred))
-    
+    print(25*"##")
+    print("USING HYPERTUNING")
+    grid_vals = GRID_SRCH_PARAMS[args.model]
+    grid_lr = GridSearchCV(estimator=model, param_grid=grid_vals, 
+    scoring='accuracy', cv=5, refit=True, return_train_score=True) 
+
+    #Training and Prediction
+
+    grid_lr.fit(x_train, y_train)
+    print(grid_lr.best_estimator_)
+    preds = grid_lr.best_estimator_.predict(x_test)
+    print("Testing Data:")
+    print("Accuracy:",accuracy_score(y_test,preds))
+    print("F1 Score:",f1_score(y_test,preds, average="weighted"))
 #     ## logistic regression
 #     model_logistic = LogisticRegression()
 #     model_logistic.fit(x_train,y_train)
