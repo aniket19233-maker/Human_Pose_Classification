@@ -37,7 +37,19 @@ args = parser.parse_args()
 
 # models
 MODELS = {'LR':LogisticRegression(), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC()}
-GRID_SRCH_PARAMS = {'LR':{'penalty': ['l1','l2'], 'C': [0.001,0.01,0.1,1]}}
+GRID_SRCH_PARAMS = {
+    'LR':{'penalty': ['l1','l2'], 'C': [0.001,0.01,0.1,1]}, 
+    'SGD':{'alpha': [1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3], 'max_iter': [100,500,1000], 
+          'loss': ['hinge', 'log', 'modified_huber', 'squared_hinge', 'perceptron'], 
+          'penalty': ['l1', 'l2', 'elasticnet'], 
+          'learning_rate': ['constant', 'optimal', 'invscaling', 'adaptive']},
+    'RF':{'bootstrap': [True], 'max_depth': [5, 10, 50, 100], 
+          'max_features': ['auto', 'log2'], 'n_estimators': [5, 10, 50, 100]},
+    'KNN':{'metric':['euclidean','manhattan'] ,'n_neighbors': np.arange(1, 16),
+          'algorithm':{'auto', 'ball_tree', 'kd_tree', 'brute'}},     
+    'ADA':{'n_estimators':[5, 10, 50, 100], 
+          'learning_rate':[0.0001, 0.001, 0.01, 0.1, 1.0]}, 
+    }
 
 # function to train_models
 def run_model(x_train, x_test, y_train, y_test, custom):
