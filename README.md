@@ -15,9 +15,10 @@ To install the dependencies pls run the following command
 ```
 For training the model run the following command
 ```
-!python3 train.py --model= <MODEL_NAME>
+!python3 train.py --model= <MODEL_NAME> --feature_type = <FEATURE_TYPE>
 ```
-Follow the 'MODEL_NAME' abbreviations for running the above command
+
+'MODEL_NAME' values
 
 LR = Logistic Regression Classifier<br />
 GNB = Gaussian Naive Bayes<br />
@@ -26,3 +27,8 @@ XGB = XGBoost Classifier<br />
 ADA = Adaboost Classifier<br />
 SGD = SGD Classifier<br />
 SVM = Support Vector Machine Classifier
+
+'FEATURE_TYPE' values
+
+raw = to feed raw keypoints data to the models
+custom = to feed custom features designed from raw keypoints to the models
