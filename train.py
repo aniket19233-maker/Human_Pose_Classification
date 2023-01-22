@@ -1,13 +1,8 @@
 from imblearn.over_sampling import SMOTE
-import sklearn
 import numpy as np
 import pandas as pd
-from sklearn import preprocessing
-from sklearn.utils import shuffle
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import *
-from numpy.linalg import norm
-from sklearn.metrics.pairwise import cosine_similarity
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
@@ -17,14 +12,9 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
-import mediapipe as mp
-import cv2
-import os
 from xgboost import XGBClassifier
-from tqdm import tqdm
 
 import pickle
-import copy
 import argparse
 from train_utils import *
 
@@ -32,6 +22,7 @@ parser = argparse.ArgumentParser(description='manual to this script')
 
 #model to train
 parser.add_argument('--model', default='LR')
+parser.add_argument('--feature_type', default='custom')
 
 args = parser.parse_args()
 
@@ -60,13 +51,16 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     model = MODELS[args.model]
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
+
     print(25*"##")
     print(args.model)
     print("Testing Data:")
     print("Accuracy:",accuracy_score(y_test,y_pred))
     print("F1 Score:",f1_score(y_test,y_pred, average="weighted"))
+
     #print(classification_report(y_test,y_pred))
     #print(25*"**")
+    
     y_pred = model.predict(x_train)
     print(25*"--")
     print("Training Data:")
@@ -122,11 +116,34 @@ def get_designed_data_results(df):
     
     return model_dict
 
+#NOT NEEDED
+def get_raw_data_results(df):
+    
+    ## converting output to numeric values
+    le.fit(df["Pose"])
+    df["label"] = le.transform(df["Pose"])
+    
+    ## dropping Pose column
+    df.drop(columns=["Pose","ImgNum"],inplace=True)
+     
+    x = df.iloc[:,:-1]
+    y = df.iloc[:,-1]
+    
+    x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
+
+    model_dict=None
+    ## running different models on this
+    model_dict = run_model(x_train, x_test, y_train, y_test,False)
+    return model_dict
+
 def main():
     
     df = pd.read_csv("trainSet_yoga82.csv")
     # model_dict = get_raw_data_results(df)
-    d = get_designed_data_results(df)
+    if args.feature_type == "raw":
+        model_dict = get_raw_data_results(df)
+    else:
+        model_dict = get_designed_data_results(df)
 
 
 if __name__ == '__main__':

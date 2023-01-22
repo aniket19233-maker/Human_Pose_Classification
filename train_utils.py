@@ -31,39 +31,7 @@ from train_utils import *
 
 le = preprocessing.LabelEncoder()
         
-#NOT NEEDED
-def get_raw_data_results(df):
-    
-    ## converting output to numeric values
-    le.fit(df["Pose"])
-    df["label"] = le.transform(df["Pose"])
-    
-    ## dropping Pose column
-    df.drop(columns=["Pose","ImgNum"],inplace=True)
-    
-    ## feature designing for train and test
-    df #= get_designed_data_df(df)
-    
-    x = df.iloc[:,:-1]
-    y = df.iloc[:,-1]
-    
-    x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
 
-    """dataset = pd.concat([x_train, y_train], axis=1)
-    dict1 = {} #pose -> 132 size array with mean keypoints
-
-    for pose in range(0,81):
-      temp = dataset.loc[dataset['label'] == pose].mean()
-      dict1[pose] = temp
-    print(dict1)"""
-
-    
-    ## running different models on this
-    model_dict = run_models(x_train, x_test, y_train, y_test,False)
-    
-    return model_dict
-    ## get cosine similarity results
-    #get_cosine_similarity_results(x_train, x_test, y_train, y_test, df.columns)
     
 def get_angle(p1, p2, p3):
     
@@ -311,5 +279,3 @@ def predict_image(img_path, model, le, design_features=True):
     print("getting cosine similarity results...")
     y_test = ["" for i in range(df.shape[0])]
     y_pred = model.predict(df)
-
-    cosine_eval(df, [1 for i in range(df.shape[0])], y_pred, df.columns)
