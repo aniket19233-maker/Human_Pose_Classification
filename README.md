@@ -30,5 +30,5 @@ SVM = Support Vector Machine Classifier
 
 'FEATURE_TYPE' values
 
-raw = to feed raw keypoints data to the models
+raw = to feed raw keypoints data to the models <br/>
 custom = to feed custom features designed from raw keypoints to the models
