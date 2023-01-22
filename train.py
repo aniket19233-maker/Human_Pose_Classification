@@ -71,7 +71,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     print("USING HYPERTUNING")
     grid_vals = GRID_SRCH_PARAMS[args.model]
     grid_lr = GridSearchCV(estimator=model, param_grid=grid_vals, 
-    scoring='accuracy', cv=5, refit=True, return_train_score=True) 
+    scoring='accuracy', cv=3, refit=True, return_train_score=True) 
 
     #Training and Prediction
 
