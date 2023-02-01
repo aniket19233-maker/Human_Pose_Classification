@@ -138,7 +138,7 @@ def get_raw_data_results(df):
 
 def main():
     
-    df = pd.read_csv("trainSet_yoga82.csv")
+    df = pd.read_csv("trainSet.csv")
     # model_dict = get_raw_data_results(df)
     if args.feature_type == "raw":
         model_dict = get_raw_data_results(df)
