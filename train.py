@@ -27,7 +27,8 @@ parser.add_argument('--feature_type', default='custom')
 args = parser.parse_args()
 
 # models
-MODELS = {'LR':LogisticRegression(), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC()}
+MODELS = {'LR':LogisticRegression(), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 
+          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB()}
 GRID_SRCH_PARAMS = {
     'LR':{'penalty': ['l1','l2'], 'C': [0.0001,0.01,1,100,10000]}, 
     'SGD':{'alpha': [1e-4, 1e-2, 1e0, 1e2, 1e4], 'max_iter': [10000], 
