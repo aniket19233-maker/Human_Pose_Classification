@@ -56,7 +56,7 @@ def get_designed_data_df(df):
     for i in tqdm(range(df.shape[0])):
 
         j=0
-        while j<df.shape[1]-1:
+        while j<df.shape[1]-3:
 
             col_name = df.columns[j].split("-")[0]
 
@@ -206,7 +206,7 @@ def get_custom_features(df):
         ############################################
         
         ## centroid distance 
-        centroid = np.mean(df.iloc[i])
+        centroid = np.mean(df.iloc[i][:-3])
         incl_cols = ["left_wrist", "left_elbow", "left_shoulder", "left_eye", "left_hip", "left_knee", "left_ankle",
                      "right_wrist", "right_elbow", "right_shoulder", "right_eye", "right_hip", "right_knee", "right_ankle"]
         for col in df.columns:
