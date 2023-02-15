@@ -97,11 +97,16 @@ def run_model(x_train, x_test, y_train, y_test, custom):
 def get_designed_data_results(df):
     
     ## converting output to numeric values
-    le.fit(df["Pose"])
-    df["label"] = le.transform(df["Pose"])
+    level_3.fit(df["level_3"])
+    level_2.fit(df["level_2"])
+    level_1.fit(df["level_1"])
+
+    df["label_3"] = level_3.transform(df["level_3"])
+    df["label_2"] = level_2.transform(df["level_2"])
+    df["label_1"] = level_1.transform(df["level_1"])
     
     ## dropping Pose column
-    df.drop(columns=["Pose","ImgNum"],inplace=True)
+    df.drop(columns=["level_3","level_2","level_1"],inplace=True)
     
     ## feature designing for train and test
     df = get_designed_data_df(df)
@@ -120,12 +125,17 @@ def get_designed_data_results(df):
 #NOT NEEDED
 def get_raw_data_results(df):
     
-    ## converting output to numeric values
-    le.fit(df["Pose"])
-    df["label"] = le.transform(df["Pose"])
+   ## converting output to numeric values
+    level_3.fit(df["level_3"])
+    level_2.fit(df["level_2"])
+    level_1.fit(df["level_1"])
+
+    df["label_3"] = level_3.transform(df["level_3"])
+    df["label_2"] = level_2.transform(df["level_2"])
+    df["label_1"] = level_1.transform(df["level_1"])
     
     ## dropping Pose column
-    df.drop(columns=["Pose","ImgNum"],inplace=True)
+    df.drop(columns=["level_3","level_2","level_1"],inplace=True)
      
     x = df.iloc[:,:-1]
     y = df.iloc[:,-1]
