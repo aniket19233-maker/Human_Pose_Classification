@@ -43,7 +43,8 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     
     ## train the model
     clf = MODELS[args.model]
-    model = LocalClassifierPerNode(local_classifier=clf)
+   # model = LocalClassifierPerNode(local_classifier=clf)
+    model = LocalClassifierPerLevel(local_classifier=clf)
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
     print(y_pred[0])
