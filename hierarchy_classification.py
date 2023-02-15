@@ -80,6 +80,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
 def get_designed_data_results(df):
     
     ## converting output to numeric values
+    """
     level_3.fit(df["level_3"])
     level_2.fit(df["level_2"])
     level_1.fit(df["level_1"])
@@ -93,7 +94,7 @@ def get_designed_data_results(df):
     
     ## feature designing for train and test
     df = get_designed_data_df(df)
-    
+    """
     x = df.iloc[:,:-3]
     y = [df.iloc[:,-3],df.iloc[:,-2],df.iloc[:,-1]]
     
@@ -132,11 +133,13 @@ def get_raw_data_results(df):
 
 def main():
     
-    df = pd.read_csv("dataset_hierarchy.csv")
+   
     # model_dict = get_raw_data_results(df)
     if args.feature_type == "raw":
+        df = pd.read_csv("dataset_hierarchy.csv")
         model_dict = get_raw_data_results(df)
     else:
+        df = pd.read_csv("custom_dataset_hierarchy.csv")
         model_dict = get_designed_data_results(df)
 
 
