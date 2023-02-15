@@ -102,7 +102,7 @@ def get_designed_data_results(df):
     df = get_designed_data_df(df)
     """
     x = df.iloc[:,:-3]
-    y = [[level_3.inverse_transform(df.iloc[:,-3][i]), level_2.inverse_transform(df.iloc[:,-2][i]), level_1.inverse_transform(df.iloc[:,-1][i]]) for i in range(df.shape[0])]
+    y = [[level_3.inverse_transform(df.iloc[:,-3][i]), level_2.inverse_transform(df.iloc[:,-2][i]), level_1.inverse_transform(df.iloc[:,-1][i]])] for i in range(df.shape[0])]
 
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
     
@@ -128,7 +128,7 @@ def get_raw_data_results(df):
     df.drop(columns=["level_3","level_2","level_1"],inplace=True)
      
     x = df.iloc[:,:-3]
-    y = [[level_3.inverse_transform(df.iloc[:,-3][i]), level_2.inverse_transform(df.iloc[:,-2][i]), level_1.inverse_transform(df.iloc[:,-1][i]]) for i in range(df.shape[0])]
+    y = [[level_3.inverse_transform(df.iloc[:,-3][i]), level_2.inverse_transform(df.iloc[:,-2][i]), level_1.inverse_transform(df.iloc[:,-1][i]])] for i in range(df.shape[0])]
 
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
 
