@@ -174,7 +174,7 @@ def get_custom_features(df):
         mid_point = (df["left_shoulder"][i] + df["right_shoulder"][i]) / 2
         angle = get_angle(df["left_elbow"][i], mid_point, df["right_elbow"][i])
 
-        #centroid = np.mean(df.iloc[i])
+        #centroid = np.mean(df.iloc[i][:-3])
         #angle = get_angle(df["left_elbow"][i], centroid, df["right_elbow"][i])
 
         d["elbow_to_elbow_angle"].append(angle)
