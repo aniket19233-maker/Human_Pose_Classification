@@ -70,9 +70,9 @@ def get_designed_data_df(df):
             j+=4
 
       ## output
-    d["level_3"] = df["level_3"]
-    d["level_2"] = df["level_2"]
-    d["level_1"] = df["level_1"]
+    d["level_3"] = df["label_3"]
+    d["level_2"] = df["label_2"]
+    d["level_1"] = df["label_1"]
         
     return get_custom_features(pd.DataFrame(d))
 
