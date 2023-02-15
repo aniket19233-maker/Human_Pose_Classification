@@ -96,7 +96,9 @@ def get_custom_features(df):
      
    # print("shape:",df.shape)
    # print("cols:",df.columns)
+   
     ## add features
+    df.to_csv("./kuch_bhi.csv")
     d = {}
 
     ## angles
@@ -236,7 +238,9 @@ def get_custom_features(df):
     d["level_2"] = df["level_2"]
     d["level_1"] = df["level_1"]
     
-    return pd.DataFrame(d)
+    final_data = pd.DataFrame(d)
+    final_data.to_csv("./custom_data_hierarchy.csv")
+    return final_data
 
 
 
