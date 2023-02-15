@@ -69,9 +69,10 @@ def get_designed_data_df(df):
             d[col_name].append(data_point)
             j+=4
 
-        if "label" not in d:
-            d["label"] = []
-        d["label"].append(df.iloc[i,j]) 
+      ## output
+    d["level_3"] = df["level_3"]
+    d["level_2"] = df["level_2"]
+    d["level_1"] = df["level_1"]
         
     return get_custom_features(pd.DataFrame(d))
 
