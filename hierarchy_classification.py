@@ -31,7 +31,7 @@ args = parser.parse_args()
 
 # models
 MODELS = {'LR':LogisticRegression(C=1000, max_iter=1000), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 
-          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB(), 'DT':DecisionTreeClassifier(max_depth=2)}
+          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB(), 'DT':DecisionTreeClassifier(max_depth=1)}
 
 def draw_graph(classifier):
     nx.draw(classifier.hierarchy, with_labels=True, node_color='Red')
@@ -102,7 +102,7 @@ def get_designed_data_results(df):
     df = get_designed_data_df(df)
     """
     x = df.iloc[:,:-3]
-    y = [[df.iloc[:,-3][i], df.iloc[:,-2][i], df.iloc[:,-1][i]] for i in range(df.shape[0])]
+    y = [[level_3.inverse_transform(df.iloc[:,-3][i]), level_2.inverse_transform(df.iloc[:,-2][i]), level_1.inverse_transform(df.iloc[:,-1][i]]) for i in range(df.shape[0])]
 
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
     
