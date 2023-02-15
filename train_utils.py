@@ -229,8 +229,9 @@ def get_custom_features(df):
         d["hand_to_shoulder_ratio"].append(d_hand/d_shoulder)
 
     ## output
-    if "label" in df:
-        d["label"] = df["label"]
+    d["level_3"] = df["level_3"]
+    d["level_2"] = df["level_2"]
+    d["level_1"] = df["level_1"]
     
     return pd.DataFrame(d)
 
