@@ -31,7 +31,7 @@ args = parser.parse_args()
 
 # models
 MODELS = {'LR':LogisticRegression(C=1000, max_iter=1000), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 
-          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB(), 'DT':DecisionTreeClassifier(max_depth:5)}
+          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB(), 'DT':DecisionTreeClassifier(max_depth=5)}
 
 def draw_graph(classifier):
     nx.draw(classifier.hierarchy, with_labels=True, node_color='Red')
