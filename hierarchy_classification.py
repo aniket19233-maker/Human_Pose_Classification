@@ -57,12 +57,12 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     l3_test = []
     
     for i in range(len(y_pred)):
-          l1_pred.append(y_pred[i][0])
+          l1_pred.append(y_pred[i][2])
           l2_pred.append(y_pred[i][1])
-          l3_pred.append(y_pred[i][2])
-          l1_test.append(y_test[i][0])
+          l3_pred.append(y_pred[i][0])
+          l1_test.append(y_test[i][2])
           l2_test.append(y_test[i][1])
-          l3_test.append(y_test[i][2])
+          l3_test.append(y_test[i][0])
           
     print(l1_pred)
     print(l1_test)
