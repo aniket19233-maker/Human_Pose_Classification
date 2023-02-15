@@ -86,21 +86,21 @@ def run_model(x_train, x_test, y_train, y_test, custom):
 def get_designed_data_results(df):
     
     ## converting output to numeric values
-    """
-    level_3.fit(df["level_3"])
-    level_2.fit(df["level_2"])
-    level_1.fit(df["level_1"])
+    
+#     level_3.fit(df["level_3"])
+#     level_2.fit(df["level_2"])
+#     level_1.fit(df["level_1"])
 
-    df["label_3"] = level_3.transform(df["level_3"])
-    df["label_2"] = level_2.transform(df["level_2"])
-    df["label_1"] = level_1.transform(df["level_1"])
+    df["label_3"] = df["level_3"]#level_3.transform(df["level_3"])
+    df["label_2"] = df["level_2"]#level_2.transform(df["level_2"])
+    df["label_1"] = df["level_1"]#level_1.transform(df["level_1"])
     
     ## dropping Pose column
     df.drop(columns=["level_3","level_2","level_1"],inplace=True)
     
     ## feature designing for train and test
     df = get_designed_data_df(df)
-    """
+    
     x = df.iloc[:,:-3]
     y = [[level_3.inverse_transform(df.iloc[:,-3][i]), level_2.inverse_transform(df.iloc[:,-2][i]), level_1.inverse_transform(df.iloc[:,-1][i])] for i in range(df.shape[0])]
 
@@ -115,14 +115,9 @@ def get_designed_data_results(df):
 #NOT NEEDED
 def get_raw_data_results(df):
     
-   ## converting output to numeric values
-    level_3.fit(df["level_3"])
-    level_2.fit(df["level_2"])
-    level_1.fit(df["level_1"])
-
-    df["label_3"] = level_3.transform(df["level_3"])
-    df["label_2"] = level_2.transform(df["level_2"])
-    df["label_1"] = level_1.transform(df["level_1"])
+    df["label_3"] = df["level_3"]#level_3.transform(df["level_3"])
+    df["label_2"] = df["level_2"]#level_2.transform(df["level_2"])
+    df["label_1"] = df["level_1"]#level_1.transform(df["level_1"])
     
     ## dropping Pose column
     df.drop(columns=["level_3","level_2","level_1"],inplace=True)
@@ -139,10 +134,7 @@ def get_raw_data_results(df):
 
 def main():
     
-    dummy = pd.read_csv("dataset_hierarchy.csv")
-    level_3.fit(dummy["level_3"])
-    level_2.fit(dummy["level_2"])
-    level_1.fit(dummy["level_1"])
+    
     # model_dict = get_raw_data_results(df)
     if args.feature_type == "raw":
         df = pd.read_csv("dataset_hierarchy.csv")
