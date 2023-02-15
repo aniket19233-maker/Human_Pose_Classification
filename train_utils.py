@@ -55,8 +55,8 @@ def get_designed_data_df(df):
 
     for i in tqdm(range(df.shape[0])):
 
-        j=0
-        while j<df.shape[1]-6:
+        j=1
+        while j<=df.shape[1]-7:
 
             col_name = df.columns[j].split("-")[0]
 
