@@ -29,7 +29,9 @@ import copy
 import argparse
 from train_utils import *
 
-le = preprocessing.LabelEncoder()
+level_3 = preprocessing.LabelEncoder()
+level_2 = preprocessing.LabelEncoder()
+level_1 = preprocessing.LabelEncoder()
         
 
     
