@@ -1,4 +1,6 @@
 mediapipe
+hipy
+networkx
 sklearn
 imblearn
 pandas
