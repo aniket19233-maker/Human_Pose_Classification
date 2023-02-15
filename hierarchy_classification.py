@@ -47,6 +47,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
     print(y_pred[0])
+    print(y_test[0])
     ## create l1, l2, l3
     l1_pred = []
     l2_pred = []
@@ -56,9 +57,9 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     l3_test = []
     
     for i in range(len(y_pred)):
-          l1_pred.append(eval(y_pred[i][0]))
-          l2_pred.append(eval(y_pred[i][1]))
-          l3_pred.append(eval(y_pred[i][2]))
+          l1_pred.append(y_pred[i][0])
+          l2_pred.append(y_pred[i][1])
+          l3_pred.append(y_pred[i][2])
           l1_test.append(y_test[i][0])
           l2_test.append(y_test[i][1])
           l3_test.append(y_test[i][2])
