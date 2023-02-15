@@ -142,7 +142,7 @@ def main():
     dummy = pd.read_csv("dataset_hierarchy.csv")
     level_3.fit(dummy["level_3"])
     level_2.fit(dummy["level_2"])
-    level_1.fit(dummy["level_1"]
+    level_1.fit(dummy["level_1"])
     # model_dict = get_raw_data_results(df)
     if args.feature_type == "raw":
         df = pd.read_csv("dataset_hierarchy.csv")
