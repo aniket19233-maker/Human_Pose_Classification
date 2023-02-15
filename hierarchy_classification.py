@@ -14,7 +14,7 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
-from hiclass import LocalClassifierPerNode
+from hiclass import LocalClassifierPerNode, LocalClassifierPerLevel
 import networkx as nx
 
 import pickle
