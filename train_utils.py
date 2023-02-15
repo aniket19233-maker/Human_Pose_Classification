@@ -239,7 +239,8 @@ def get_custom_features(df):
     d["level_1"] = df["level_1"]
     
     final_data = pd.DataFrame(d)
-    final_data.to_csv("./custom_data_hierarchy.csv")
+    final_data.to_csv("/content/drive/MyDrive/CV_Project/custom_dataset_hierarchy.csv")
+    print("file saved")
     return final_data
 
 
