@@ -93,8 +93,8 @@ def get_plane(p1, p2, p3):
 
 def get_custom_features(df):
     
-    print("shape:",df.shape)
-    print("cols:",df.columns)
+   # print("shape:",df.shape)
+   # print("cols:",df.columns)
     ## add features
 
     d = {}
@@ -208,7 +208,8 @@ def get_custom_features(df):
         ############################################
         
         ## centroid distance 
-        centroid = np.mean(df.iloc[i][:-3])
+        print(df.iloc[i.:-3])
+        centroid = np.mean(df.iloc[i,:-3])
         incl_cols = ["left_wrist", "left_elbow", "left_shoulder", "left_eye", "left_hip", "left_knee", "left_ankle",
                      "right_wrist", "right_elbow", "right_shoulder", "right_eye", "right_hip", "right_knee", "right_ankle"]
         for col in df.columns:
