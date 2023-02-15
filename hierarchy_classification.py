@@ -62,6 +62,9 @@ def run_model(x_train, x_test, y_train, y_test, custom):
           l1_test.append(y_test[i][0])
           l2_test.append(y_test[i][1])
           l3_test.append(y_test[i][2])
+          
+    print(y_pred)
+    print(y_test)
     print(25*"##")
     print(args.model)
     print("Testing Data:")
