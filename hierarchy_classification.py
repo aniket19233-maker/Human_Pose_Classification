@@ -14,7 +14,7 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
-from hiclass import LocalClassifierPerNode, LocalClassifierPerLevel
+from hiclass import LocalClassifierPerNode, LocalClassifierPerLevel, LocalClassifierPerParentNode
 import networkx as nx
 
 import pickle
@@ -31,7 +31,7 @@ args = parser.parse_args()
 
 # models
 MODELS = {'LR':LogisticRegression(C=1000, max_iter=1000), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 
-          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB(), 'DT':DecisionTreeClassifier(max_depth=1)}
+          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB(), 'DT':DecisionTreeClassifier(max_depth=3)}
 
 def draw_graph(classifier):
     nx.draw(classifier.hierarchy, with_labels=True, node_color='Red')
@@ -44,7 +44,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     ## train the model
     clf = MODELS[args.model]
    # model = LocalClassifierPerNode(local_classifier=clf)
-    model = LocalClassifierPerNode(local_classifier=clf)
+    model = LocalClassifierPerParentNode(local_classifier=clf)
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
     print(y_pred[0])
