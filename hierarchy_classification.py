@@ -49,7 +49,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     y_pred = model.predict(x_test)
     print(y_pred[0])
     print(y_test[0])
-    draw_graph(model)
+    print(draw_graph(model))
     ## create l1, l2, l3
     l1_pred = []
     l2_pred = []
