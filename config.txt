@@ -1,5 +1,6 @@
 mediapipe
 hipy
+hiclass
 networkx
 sklearn
 imblearn
