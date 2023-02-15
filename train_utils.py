@@ -98,7 +98,7 @@ def get_custom_features(df):
    # print("cols:",df.columns)
    
     ## add features
-    df.to_csv("./kuch_bhi.csv")
+  #  df.to_csv("./kuch_bhi.csv")
     d = {}
 
     ## angles
