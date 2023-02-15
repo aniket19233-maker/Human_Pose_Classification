@@ -94,6 +94,7 @@ def get_plane(p1, p2, p3):
 def get_custom_features(df):
     
     print("shape:",df.shape)
+    print("cols:",df.columns)
     ## add features
 
     d = {}
