@@ -46,7 +46,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     model = LocalClassifierPerNode(local_classifier=clf)
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
-          
+    print(y_pred[0])
     ## create l1, l2, l3
     l1_pred = []
     l2_pred = []
