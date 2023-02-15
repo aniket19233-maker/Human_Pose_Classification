@@ -46,26 +46,29 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     model = LocalClassifierPerNode(local_classifier=clf)
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
-    print(y_pred[:5])
-    draw_graph(lcpn)
-    return None
+          
+    ## create l1, l2, l3
+    l1_pred = []
+    l2_pred = []
+    l3_pred = []
+    l1_test = []
+    l2_test = []
+    l3_test = []
+    
+    for i in range(len(y_pred)):
+          l1_pred.append(y_pred[i][0])
+          l2_pred.append(y_pred[i][1])
+          l3_pred.append(y_pred[i][2])
+          l1_test.append(y_test[i][0])
+          l2_test.append(y_test[i][1])
+          l3_test.append(y_test[i][2])
     print(25*"##")
     print(args.model)
     print("Testing Data:")
-    print("Accuracy:",accuracy_score(y_test,y_pred))
-    print("F1 Score:",f1_score(y_test,y_pred, average="weighted"))
-
-    #print(classification_report(y_test,y_pred))
-    #print(25*"**")
-    
-    y_pred = model.predict(x_train)
-    print(25*"--")
-    print("Training Data:")
-    print("Accuracy:",accuracy_score(y_train,y_pred))
-    print("F1 Score:",f1_score(y_train,y_pred, average="weighted"))
-    ##print(classification_report(y_train,y_pred))
-    print(25*"##")
-    
+    print("L1 Accuracy:",accuracy_score(l1_pred,l1_test))
+    print("L2 Accuracy:",accuracy_score(l2_pred,l2_test))
+    print("L3 Accuracy:",accuracy_score(l3_pred,l3_test))
+        
     model_dict[args.model] = model
     name = "raw_feature_model_dict"
     if custom:
