@@ -6,6 +6,7 @@ from sklearn.metrics import *
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
@@ -13,6 +14,8 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
+from hiclass import LocalClassifierPerNode
+import networkx as nx
 
 import pickle
 import argparse
@@ -27,21 +30,11 @@ parser.add_argument('--feature_type', default='custom')
 args = parser.parse_args()
 
 # models
-MODELS = {'LR':LogisticRegression(), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 
+MODELS = {'LR':LogisticRegression(C=1000, max_iter=1000), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 
           'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB()}
-GRID_SRCH_PARAMS = {
-    'LR':{'penalty': ['l1','l2'], 'C': [0.0001,0.01,1,100,10000]}, 
-    'SGD':{'alpha': [1e-4, 1e-2, 1e0, 1e2, 1e4], 'max_iter': [10000], 
-          'loss': ['hinge', 'log', 'modified_huber', 'squared_hinge', 'perceptron'], 
-          'penalty': ['l1', 'l2', 'elasticnet'], 
-          'learning_rate': ['constant', 'optimal', 'invscaling', 'adaptive']},
-    'RF':{'bootstrap': [True], 'max_depth': [5, 10, 50, 100], 
-          'max_features': ['auto', 'log2'], 'n_estimators': [5, 10, 50, 100]},
-    'KNN':{'metric':['euclidean','manhattan'] ,'n_neighbors': np.arange(1, 16),
-          'algorithm':{'auto', 'ball_tree', 'kd_tree', 'brute'}},     
-    'ADA':{'n_estimators':[5, 10, 50, 100], 
-          'learning_rate':[0.0001, 0.001, 0.01, 0.1, 1.0]}, 
-    }
+
+def draw_graph(classifier):
+    nx.draw(classifier.hierarchy, with_labels=True, node_color='Red')
 
 # function to train_models
 def run_model(x_train, x_test, y_train, y_test, custom):
@@ -49,10 +42,13 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     model_dict = {}
     
     ## train the model
-    model = MODELS[args.model]
+    clf = MODELS[args.model]
+    model = LocalClassifierPerNode(local_classifier=clf)
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
-
+    print(y_pred[:5])
+    draw_graph(lcpn)
+    return None
     print(25*"##")
     print(args.model)
     print("Testing Data:")
@@ -69,19 +65,6 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     print("F1 Score:",f1_score(y_train,y_pred, average="weighted"))
     ##print(classification_report(y_train,y_pred))
     print(25*"##")
-    print("USING HYPERTUNING")
-    grid_vals = GRID_SRCH_PARAMS[args.model]
-    grid_lr = GridSearchCV(estimator=model, param_grid=grid_vals, 
-    scoring='accuracy', cv=3, refit=True, return_train_score=True) 
-
-    #Training and Prediction
-
-    grid_lr.fit(x_train, y_train)
-    print(grid_lr.best_estimator_)
-    preds = grid_lr.best_estimator_.predict(x_test)
-    print("Testing Data:")
-    print("Accuracy:",accuracy_score(y_test,preds))
-    print("F1 Score:",f1_score(y_test,preds, average="weighted"))
     
     model_dict[args.model] = model
     name = "raw_feature_model_dict"
@@ -111,8 +94,8 @@ def get_designed_data_results(df):
     ## feature designing for train and test
     df = get_designed_data_df(df)
     
-    x = df.iloc[:,:-1]
-    y = df.iloc[:,-1]
+    x = df.iloc[:,:-3]
+    y = [df.iloc[:,-3],df.iloc[:,-2],df.iloc[:,-1]]
     
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
     
@@ -137,8 +120,8 @@ def get_raw_data_results(df):
     ## dropping Pose column
     df.drop(columns=["level_3","level_2","level_1"],inplace=True)
      
-    x = df.iloc[:,:-1]
-    y = df.iloc[:,-1]
+    x = df.iloc[:,:-3]
+    y = [df.iloc[:,-3],df.iloc[:,-2],df.iloc[:,-1]]
     
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
 
