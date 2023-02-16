@@ -102,7 +102,7 @@ def get_designed_data_results(df):
     ## feature designing for train and test
   #  df = get_designed_data_df(df)
     
-    x = df.iloc[:,1:-3]
+    x = df.iloc[:,:-3]
     y = [[df.iloc[:,-3][i], df.iloc[:,-2][i], df.iloc[:,-1][i]] for i in range(df.shape[0])]
 
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
@@ -123,7 +123,7 @@ def get_raw_data_results(df):
     ## dropping Pose column
     df.drop(columns=["level_3","level_2","level_1"],inplace=True)
      
-    x = df.iloc[:,1:-3]
+    x = df.iloc[:,:-3]
     y = [[df.iloc[:,-3][i], df.iloc[:,-2][i], df.iloc[:,-1][i]] for i in range(df.shape[0])]
 
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
