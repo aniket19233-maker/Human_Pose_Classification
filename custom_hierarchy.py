@@ -33,7 +33,7 @@ args = parser.parse_args()
 ## DT with entropy is the best
 # models
 MODELS = {'LR':LogisticRegression(C=1000, max_iter=1000), 'SGD':SGDClassifier(), 'RF':RandomForestClassifier(), 'XGB':XGBClassifier(), 
-          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB(), 'DT':DecisionTreeClassifier(max_depth=3, criterion="entropy")}
+          'ADA':AdaBoostClassifier(), 'KNN':KNeighborsClassifier(), 'SVM':SVC(), 'GNB':GaussianNB(), 'DT':DecisionTreeClassifier(max_depth=5, criterion="entropy")}
 
 FEATURE_NAMES=None
 
@@ -89,11 +89,11 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     print("L1 Accuracy:",l1_acc)
 
     ### print
-    fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (16,16), dpi=1200)
-    plot_tree(l1_clf,
-               feature_names = FEATURE_NAMES, 
-               class_names=list(set(l1_y_train)),
-               filled = True)
+#     fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (16,16), dpi=1200)
+#     plot_tree(l1_clf,
+#                feature_names = FEATURE_NAMES, 
+#                class_names=list(set(l1_y_train)),
+#                filled = True)
     fig.savefig('imagename.png')
     ###
 
@@ -169,7 +169,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
 def get_designed_data_results(df):
     
     FEATURE_NAMES=df.columns[1:-3].values
-    x = df.iloc[:,:-3]
+    x = df.iloc[:,1:-3]
     y = [[df.iloc[:,-3][i], df.iloc[:,-2][i], df.iloc[:,-1][i]] for i in range(df.shape[0])]
 
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
@@ -190,7 +190,7 @@ def get_raw_data_results(df):
     ## dropping Pose column
     df.drop(columns=["level_3","level_2","level_1"],inplace=True)
      
-    x = df.iloc[:,:-3]
+    x = df.iloc[:,1:-3]
     y = [[df.iloc[:,-3][i], df.iloc[:,-2][i], df.iloc[:,-1][i]] for i in range(df.shape[0])]
 
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
