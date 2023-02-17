@@ -47,10 +47,13 @@ def run_model(x_train, x_test, y_train, y_test, custom):
    # model = LocalClassifierPerNode(local_classifier=clf)
           
     if args.algorithm == 'LCN':
+          clf = DecisionTreeClassifier(max_depth=5)
           model = LocalClassifierPerNode(local_classifier=clf)
     elif args.algorithm == 'LCPN':
+          clf = DecisionTreeClassifier(max_depth=20)
           model = LocalClassifierPerParentNode(local_classifier=clf)
     elif args.algorithm == 'LCPL':
+          clf = DecisionTreeClassifier(max_depth=30)
           model = LocalClassifierPerLevel(local_classifier=clf)
           
     model.fit(x_train,y_train)
