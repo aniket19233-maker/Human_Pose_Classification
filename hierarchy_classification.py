@@ -26,6 +26,7 @@ parser = argparse.ArgumentParser(description='manual to this script')
 #model to train
 parser.add_argument('--model', default='LR')
 parser.add_argument('--feature_type', default='custom')
+parser.add_argument('--algorithm', default='LCN')
 
 args = parser.parse_args()
 
@@ -44,7 +45,14 @@ def run_model(x_train, x_test, y_train, y_test, custom):
     ## train the model
     clf = MODELS[args.model]
    # model = LocalClassifierPerNode(local_classifier=clf)
-    model = LocalClassifierPerNode(local_classifier=clf)
+          
+    if args.algorithm == 'LCN':
+          model = LocalClassifierPerNode(local_classifier=clf)
+    elif args.algorithm == 'LCPN':
+          model = LocalClassifierPerParentNode(local_classifier=clf)
+    elif args.algorithm == 'LCPL':
+          model = LocalClassifierPerLevel(local_classifier=clf)
+          
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
     print(y_pred[0])
@@ -68,7 +76,7 @@ def run_model(x_train, x_test, y_train, y_test, custom):
           
     print(25*"##")
     print(args.model)
-    print("Testing Data:")
+    print("Testing Data:",args.algorithm)
     print("L1 Accuracy:",accuracy_score(l1_pred,l1_test))
     print("L2 Accuracy:",accuracy_score(l2_pred,l2_test))
     print("L3 Accuracy:",accuracy_score(l3_pred,l3_test))
