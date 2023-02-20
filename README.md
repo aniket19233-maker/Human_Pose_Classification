@@ -5,7 +5,7 @@ To run the repository use colab and clone the repository and after cloning run t
 %cd Human_Pose_Classification
 ! gdown --id 10kbGdYv0YylbEup_z__clDDLpSv9FUY2
 ! gdown --id 1--y6f1d3I1ai6FKIHQmYO-ECgBKp28NX
-! gdown -- id 1bv_M9vVC-mn9qmNGZVIsuI7inO-SUHju
+! gdown --id 1bv_M9vVC-mn9qmNGZVIsuI7inO-SUHju
 ```
 
 To install the dependencies pls run the following command
