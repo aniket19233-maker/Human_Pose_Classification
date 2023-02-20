@@ -111,7 +111,7 @@ def get_designed_data_results(df):
     df.drop(columns=["level_3","level_2","level_1"],inplace=True)
     
     ## feature designing for train and test
-    df = get_custom_features(df)
+    df = get_designed_data_df(df)
     
     x = df.iloc[:,:-3]
     y = [[df.iloc[:,-3][i], df.iloc[:,-2][i], df.iloc[:,-1][i]] for i in range(df.shape[0])]
@@ -152,7 +152,7 @@ def main():
         df = pd.read_csv("dataset_hierarchy.csv")
         model_dict = get_raw_data_results(df)
     else:
-        df = pd.read_csv("raw_data_for_custom.csv")
+        df = pd.read_csv("dataset_hierarchy.csv")
         model_dict = get_designed_data_results(df)
 
 
