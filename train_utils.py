@@ -74,7 +74,7 @@ def get_designed_data_df(df):
     d["level_2"] = df["label_2"]
     d["level_1"] = df["label_1"]
         
-    pd.DataFrame(d).to_csv('/content/drive/MyDrive/CV_Project/raw_data_for_custom.csv', index=False)
+ #   pd.DataFrame(d).to_csv('/content/drive/MyDrive/CV_Project/raw_data_for_custom.csv', index=False)
     return get_custom_features(pd.DataFrame(d))
 
 def get_plane(p1, p2, p3):
@@ -123,15 +123,15 @@ def get_custom_features(df):
     d["hand_to_shoulder_ratio"] = []
 
     # symmetry
-    """d["wrist_sagittal"] = []
+    d["wrist_sagittal"] = []
     d["elbow_sagittal"] = []
     d["knee_sagittal"] = []
-    d["ankle_sagittal"] = []"""
+    d["ankle_sagittal"] = []
 
     for i in tqdm(range(df.shape[0])):
 
         # wrist symmetry : ratio of distances of left_wrist and right_wrist from sagittal plane
-        """sagittal_plane = get_plane(df["nose"][i], (df["left_shoulder"][i]+df["right_shoulder"][i])/2, (df["left_hip"][i]+df["right_hip"][i])/2)
+        sagittal_plane = get_plane(df["nose"][i], (df["left_shoulder"][i]+df["right_shoulder"][i])/2, (df["left_hip"][i]+df["right_hip"][i])/2)
         denom = pow(pow(sagittal_plane[0],2) + pow(sagittal_plane[1],2) + pow(sagittal_plane[2],2), 0.5)
 
         dist_wrist_left = abs(sagittal_plane[0]*df["left_wrist"][i][0] + sagittal_plane[1]*df["left_wrist"][i][1] + sagittal_plane[2]*df["left_wrist"][i][2] + sagittal_plane[3]) / denom
@@ -148,7 +148,7 @@ def get_custom_features(df):
 
         dist_ankle_left = abs(sagittal_plane[0]*df["left_ankle"][i][0] + sagittal_plane[1]*df["left_ankle"][i][1] + sagittal_plane[2]*df["left_ankle"][i][2] + sagittal_plane[3]) / denom
         dist_ankle_right = abs(sagittal_plane[0]*df["right_ankle"][i][0] + sagittal_plane[1]*df["right_ankle"][i][1] + sagittal_plane[2]*df["right_ankle"][i][2] + sagittal_plane[3]) / denom
-        d["ankle_sagittal"] = dist_ankle_left / dist_ankle_right"""
+        d["ankle_sagittal"] = dist_ankle_left / dist_ankle_right
 
         ## hand angles
         angle1 = get_angle(df["left_wrist"][i], df["left_elbow"][i], df["left_shoulder"][i])
