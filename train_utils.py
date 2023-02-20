@@ -74,6 +74,7 @@ def get_designed_data_df(df):
     d["level_2"] = df["label_2"]
     d["level_1"] = df["label_1"]
         
+    pd.DataFrame(d).to_csv('/content/drive/MyDrive/CV_Project/raw_data_for_custom.csv', index=False)
     return get_custom_features(pd.DataFrame(d))
 
 def get_plane(p1, p2, p3):
@@ -239,7 +240,7 @@ def get_custom_features(df):
     d["level_1"] = df["level_1"]
     
     final_data = pd.DataFrame(d)
-    final_data.to_csv("/content/drive/MyDrive/CV_Project/custom_dataset_hierarchy.csv")
+    final_data.to_csv("/content/drive/MyDrive/CV_Project/custom_dataset_hierarchy.csv", index=False)
     print("file saved")
     return final_data
 
