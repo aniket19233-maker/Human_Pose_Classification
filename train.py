@@ -97,18 +97,16 @@ def run_model(x_train, x_test, y_train, y_test, custom):
 def get_designed_data_results(df):
     
     ## converting output to numeric values
-    le.fit(df["Pose"])
-    df["label"] = le.transform(df["Pose"])
     
+
     ## dropping Pose column
-    df.drop(columns=["Pose","ImgNum"],inplace=True)
     
     ## feature designing for train and test
     df = get_designed_data_df(df)
     
     x = df.iloc[:,:-1]
     y = df.iloc[:,-1]
-    
+    return None
     x_train, x_test, y_train, y_test = train_test_split(x,y,stratify=y,test_size=0.25, random_state=0)
     
     model_dict = None
