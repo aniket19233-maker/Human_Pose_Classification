@@ -163,17 +163,17 @@ def get_custom_features(df):
         ## heels at nose and hand at nose angle
         # heel-waist-heel instead of heel-nose-heel
         #angle1 = get_angle(df["left_wrist"][i], df["nose"][i], df["right_wrist"][i])
-        #angle2 = get_angle(df["left_heel"][i], df["nose"][i], df["right_heel"][i])
+        #angle2 = get_angle(df["left_ankle"][i], df["nose"][i], df["right_ankle"][i])
         #mid_point = (df["left_hip"][i] + df["right_hip"][i]) / 2
-        #angle2 = get_angle(df["left_heel"][i], mid_point, df["right_heel"][i])
+        #angle2 = get_angle(df["left_ankle"][i], mid_point, df["right_ankle"][i])
 
         #d["hand_at_nose_angle"].append(angle1)
         #d["heel_at_nose_angle"].append(angle2)
 
         # nose-waist-heel
         midpoint = (df["left_hip"][i] + df["right_hip"][i]) / 2
-        angle1 = get_angle(df["nose"][i], midpoint, df["right_heel"][i])
-        angle2 = get_angle(df["nose"][i], midpoint, df["left_heel"][i])
+        angle1 = get_angle(df["nose"][i], midpoint, df["right_ankle"][i])
+        angle2 = get_angle(df["nose"][i], midpoint, df["left_ankle"][i])
 
         d["max_nose_to_heel_angle"].append(max(angle1,angle2))
 
