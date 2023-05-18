@@ -55,24 +55,24 @@ def get_designed_data_df(df):
 
     for i in tqdm(range(df.shape[0])):
 
-        j=1
-        while j<=df.shape[1]-7:
+        j=0
+        while j<=df.shape[1]-5:
 
             col_name = df.columns[j].split("-")[0]
 
-            data_point = np.array([df.iloc[i,j], df.iloc[i,j+1], df.iloc[i,j+2]])
+            data_point = np.array([df.iloc[i,j], df.iloc[i,j+1]])
             col_name = col_name.lower()
 
             if col_name not in d:
                 d[col_name] = []
 
             d[col_name].append(data_point)
-            j+=4
+            j+=2
 
       ## output
-    d["level_3"] = df["label_3"]
-    d["level_2"] = df["label_2"]
-    d["level_1"] = df["label_1"]
+    d["level_3"] = df["level_3"]
+    d["level_2"] = df["level_2"]
+    d["level_1"] = df["level_1"]
         
  #   pd.DataFrame(d).to_csv('/content/drive/MyDrive/CV_Project/raw_data_for_custom.csv', index=False)
     return get_custom_features(pd.DataFrame(d))
@@ -114,41 +114,10 @@ def get_custom_features(df):
     d["knee_to_knee_angle"] = []
     d["elbow_to_elbow_angle"] = []
 
-    #d["heel_at_nose_angle"] = []
-    #d["hand_at_nose_angle"] = []
     d["max_nose_to_heel_angle"] = []
 
-    ## distances
-    d["feet_to_shoulder_ratio"] = []
-    d["hand_to_shoulder_ratio"] = []
-
-    # symmetry
-    d["wrist_sagittal"] = []
-    d["elbow_sagittal"] = []
-    d["knee_sagittal"] = []
-    d["ankle_sagittal"] = []
-
+    
     for i in tqdm(range(df.shape[0])):
-
-        # wrist symmetry : ratio of distances of left_wrist and right_wrist from sagittal plane
-        sagittal_plane = get_plane(df["nose"][i], (df["left_shoulder"][i]+df["right_shoulder"][i])/2, (df["left_hip"][i]+df["right_hip"][i])/2)
-        denom = pow(pow(sagittal_plane[0],2) + pow(sagittal_plane[1],2) + pow(sagittal_plane[2],2), 0.5)
-
-        dist_wrist_left = abs(sagittal_plane[0]*df["left_wrist"][i][0] + sagittal_plane[1]*df["left_wrist"][i][1] + sagittal_plane[2]*df["left_wrist"][i][2] + sagittal_plane[3]) / denom
-        dist_wrist_right = abs(sagittal_plane[0]*df["right_wrist"][i][0] + sagittal_plane[1]*df["right_wrist"][i][1] + sagittal_plane[2]*df["right_wrist"][i][2] + sagittal_plane[3]) / denom
-        d["wrist_sagittal"] = dist_wrist_left / dist_wrist_right
-
-        dist_elbow_left = abs(sagittal_plane[0]*df["left_elbow"][i][0] + sagittal_plane[1]*df["left_elbow"][i][1] + sagittal_plane[2]*df["left_elbow"][i][2] + sagittal_plane[3]) / denom
-        dist_elbow_right = abs(sagittal_plane[0]*df["right_elbow"][i][0] + sagittal_plane[1]*df["right_elbow"][i][1] + sagittal_plane[2]*df["right_elbow"][i][2] + sagittal_plane[3]) / denom
-        d["elbow_sagittal"] = dist_elbow_left / dist_elbow_right
-
-        dist_knee_left = abs(sagittal_plane[0]*df["left_knee"][i][0] + sagittal_plane[1]*df["left_knee"][i][1] + sagittal_plane[2]*df["left_knee"][i][2] + sagittal_plane[3]) / denom
-        dist_knee_right = abs(sagittal_plane[0]*df["right_knee"][i][0] + sagittal_plane[1]*df["right_knee"][i][1] + sagittal_plane[2]*df["right_knee"][i][2] + sagittal_plane[3]) / denom
-        d["knee_sagittal"] = dist_knee_left / dist_knee_right
-
-        dist_ankle_left = abs(sagittal_plane[0]*df["left_ankle"][i][0] + sagittal_plane[1]*df["left_ankle"][i][1] + sagittal_plane[2]*df["left_ankle"][i][2] + sagittal_plane[3]) / denom
-        dist_ankle_right = abs(sagittal_plane[0]*df["right_ankle"][i][0] + sagittal_plane[1]*df["right_ankle"][i][1] + sagittal_plane[2]*df["right_ankle"][i][2] + sagittal_plane[3]) / denom
-        d["ankle_sagittal"] = dist_ankle_left / dist_ankle_right
 
         ## hand angles
         angle1 = get_angle(df["left_wrist"][i], df["left_elbow"][i], df["left_shoulder"][i])
@@ -210,37 +179,14 @@ def get_custom_features(df):
 
         ############################################
         
-        ## centroid distance 
-        centroid = np.mean(df.iloc[i,:-3])
-        incl_cols = ["left_wrist", "left_elbow", "left_shoulder", "left_eye", "left_hip", "left_knee", "left_ankle",
-                     "right_wrist", "right_elbow", "right_shoulder", "right_eye", "right_hip", "right_knee", "right_ankle"]
-        for col in df.columns:
-  
-            if col in incl_cols:
-                
-                name = col+"_centroid_distance"
-                if name not in d:
-                    d[name] = []
-
-                #print(col, df[col][i])
-                d[name].append(np.sqrt(np.sum(np.square(df[col][i]-centroid))))
-        
-        ## feet and hand to shoulder ratio
-
-        d_shoulder = np.sqrt(np.sum(np.square(df["left_shoulder"][i] - df["right_shoulder"][i])))
-        d_hand = np.sqrt(np.sum(np.square(df["left_wrist"][i] - df["right_wrist"][i])))
-        d_feet = np.sqrt(np.sum(np.square(df["left_foot_index"][i] - df["right_foot_index"][i])))
-
-        d["feet_to_shoulder_ratio"].append(d_feet/d_shoulder)
-        d["hand_to_shoulder_ratio"].append(d_hand/d_shoulder)
-
+    
     ## output
     d["level_3"] = df["level_3"]
     d["level_2"] = df["level_2"]
     d["level_1"] = df["level_1"]
     
     final_data = pd.DataFrame(d)
-    final_data.to_csv("/content/drive/MyDrive/CV_Project/custom_dataset_hierarchy.csv", index=False)
+    final_data.to_csv("/content/with_angles.csv", index=False)
     print("file saved")
     return final_data
 
